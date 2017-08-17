@@ -47,13 +47,12 @@
 			
 
 				$("tr.ct_list_pop td:nth-child(3)").on("click", function(){
-					if( ${ sessionScope.user.role eq 'admin'} | $(this).find('input')[1].val().length==0  ) {
+					if( ${ sessionScope.user.role eq 'admin'} ||!$( $(this).find('input')[0]).val() ) {
 					self.location ="/product/getProduct?prodNo="+$( $(this).find('input')[1]).val() +"&menu=${param.menu}"
 					}
 				});
 
-
-		});
+	 });
 	
 
 	</script>
