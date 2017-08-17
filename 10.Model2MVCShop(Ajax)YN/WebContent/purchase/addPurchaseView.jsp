@@ -24,7 +24,7 @@ $(function() {
 		fncAddPurchase();
 	});
 	
-	 $( "td:contains('취소')" ).on("click" , function() {
+	 $( "tr.ct_purchase td:contains('취소')" ).on("click" , function() {
 		 history.go(-1);
 		});
  });	
@@ -44,7 +44,7 @@ $(function() {
 		<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left: 10px;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td width="93%" class="ct_ttl01">상품상세조회</td>
+					<td width="93%" class="ct_ttl01">구매정보입력</td>
 					<td width="20%" align="right">&nbsp;</td>
 				</tr>
 			</table>

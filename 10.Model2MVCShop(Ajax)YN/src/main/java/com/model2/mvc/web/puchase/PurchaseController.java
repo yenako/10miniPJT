@@ -109,6 +109,7 @@ public class PurchaseController {
 		search.setPageSize(pageSize);
 		
 		User user = (User) session.getAttribute("user");
+		System.out.println(user);
 			
 			search.setSearchKeyword(user.getUserId());
 			Map<String , Object> map=purchaseService.getPurchaseList(search, user.getUserId());

@@ -7,8 +7,10 @@
 	<title>상품 목록조회</title>
 	
 	<link rel="stylesheet" href="/css/admin.css" type="text/css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script type="text/javascript">
 	
 	function fncGetProductList(currentPage) {
@@ -52,17 +54,89 @@
 			console.log("input: hidden [0] 은 : _"+$($('input:hidden').eq(0)).val()+"_");
 			console.log("input: hidden [1] 은 : "+$($('input:hidden').eq(1)).val());
 			
-			
 
-				$("tr.ct_list_pop td:nth-child(3)").on("click", function(){
+			$("tr.ct_list_pop td:nth-child(3)").on("click", function(){
 					if( ${ sessionScope.user.role eq 'admin'} || !$( $(this).find('input')[0]).val() ) {
 					self.location ="/product/getProduct?prodNo="+$( $(this).find('input')[1]).val() +"&menu=${param.menu}"
 					}
-				});
+			});
 
 	});
+		
 	
+		$( function(){		
+			$( document ).tooltip();
+			
+		});	
+		
+		$( function() {
+			
+		    var availableTags ="";
+		    	/*  [
+        		      "ActionScript",
+        		    ]; */
+			
+			$.ajax(
+					{
+						url : "/product/json/getProdNames" ,
+						method : "GET" ,
+						dataType : "json" ,
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						success : function(JSONData , status) {
+							
+							alert("status"+status);
+							//Debug...
+							alert("JSONData : \n"+JSONData);
+							//Debug...
+							alert("JSONData string : \n"+JSON.stringify(JSONData));
+							
+							availableTags = JSON.stringify(JSONData);
+						}
+				});
 
+		    $( "input.ct_input_g" ).autocomplete({
+		      source: availableTags
+		    });
+		  } );
+		
+		$( function(){
+			$( "tr.ct_list_pop:contains('판매중') span" ).on("click" , function() {
+				alert("판매중을 클릭했습니다.");
+				var prodNo = $( $(this).find('input')).val();
+				console.log(prodNo);
+				$.ajax(
+						{
+							
+							url : "/product/json/getProduct/"+prodNo+"/manage" ,
+							method : "GET" ,
+							dataType : "json" ,
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+							success : function(JSONData , status) {
+								
+								alert(prodNo);
+								//Debug...
+								alert(status);
+								//Debug...
+								alert("JSONData string : \n"+JSON.stringify(JSONData));
+								//console.log("fileName : "+JSONData.fileName);
+								var displayValue = "<img src =/images/uploadFiles/"
+																+JSONData.fileName+"/>";
+								//Debug...									
+								//alert(displayValue);
+								$("img").remove();
+								$( "#image").html(displayValue);
+							}
+					});
+					////////////////////////////////////////////////////////////////////////////////////////////
+			});
+		});
+	
 	</script>
 </head>
 
@@ -170,7 +244,7 @@
 		<td align="center">${i }</td>
 		<td></td>
 	
-		<td align="left">${product.prodName}
+		<td align="left">	<a href="#" title="상품 설명 : ${product.prodDetail }">${product.prodName}</a> 
 				<input type="hidden" value="${product.proTranCode}"/>
 				<input type="hidden" value="${product.prodNo }"/>
 		
@@ -186,11 +260,11 @@
 		<td></td>
 		<td align="center">${product.manuDate}</td>
 		<td></td>
-		<td align="center">	
+		<td align="center" >	
 		
 		
 			<c:if test="${empty product.proTranCode}">
-					판매중
+					<span>판매중<input type="hidden" value="${product.prodNo }"/></span>
 			</c:if>
 			<c:if test="${!empty product.proTranCode}">
 			
@@ -199,6 +273,7 @@
 						<c:when test="${product.proTranCode=='1  ' }">
 							구매완료 &nbsp; 
 							 <span>배송하기  </apan>
+							 
 							<input type="hidden" id="prodNo2" name ="prodNo2" value="${product.prodNo }"/>
 						</c:when>
 						<c:when test="${product.proTranCode=='2  ' }">
@@ -217,6 +292,7 @@
 
 
 		</td>	
+		<td id="image" colspan="5" bgcolor="D6D7D6" height="1"></td>
 	</tr>
 	<tr>
 		<td colspan="11" bgcolor="D6D7D6" height="1"></td>

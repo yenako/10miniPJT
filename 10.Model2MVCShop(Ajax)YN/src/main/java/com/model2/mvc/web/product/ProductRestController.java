@@ -1,6 +1,9 @@
 package com.model2.mvc.web.product;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.model2.mvc.common.Search;
 import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.product.ProductService;
 
@@ -62,6 +66,28 @@ public class ProductRestController {
 			return productService.addProduct(product);
 		}
 		
+		@RequestMapping(value = "json/getProdNames", method=RequestMethod.GET)
+		public List getProdNames() throws Exception{
+			System.out.println("/product/json/getProdNames : GET");
+			
+			Search search  = new Search();
+			if(search.getCurrentPage() ==0 ){
+				search.setCurrentPage(1);
+			}
+			search.setPageSize(100);
+			
+			Map<String , Object> map=productService.getProductList(search);
+			List list = (List)map.get("list");
+			
+			List<String> listProdName = new ArrayList<String>();
+			
+			for(int i=0; i<list.size(); i++){
+				Product product = (Product)list.get(i);
+				listProdName.add(product.getProdName());				
+			}
+			
+			return listProdName;
+		}
 		
 		@RequestMapping(value = "json/getProduct/{prodNo}/{menu}", method=RequestMethod.GET)
 		public Product getProduct(@PathVariable("prodNo") int prodNo,

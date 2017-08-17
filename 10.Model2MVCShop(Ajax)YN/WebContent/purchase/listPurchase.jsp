@@ -7,9 +7,11 @@
 <head>
 <title>구매 목록조회</title>
 
-<link rel="stylesheet" href="/css/admin.css" type="text/css">
-
+	<link rel="stylesheet" href="/css/admin.css" type="text/css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script type="text/javascript">
 
 
@@ -37,6 +39,63 @@ $( function(){
 		self.location = "/purchase/updateTranCode?tranNo="+$('input:hidden[name="tranNoRe"]', $(this)).val()+"&tranCode=3";
 	});
  });
+ 
+
+// $( '#riverroad' ).tooltip( {
+//     position: "center right",
+//     opacity: 0.8
+//   } ).dynamic( { bottom: { direction: 'down', bounce: true } } );
+
+// $( "#riverroad").each(function() {
+	$( function(){
+
+//     $( this).tooltip({
+//  	$( "#riverroad").tooltip({
+	$( ".ct_list_pop td:nth-child(3)").tooltip({
+		
+		effect: 'fade', 
+		content: function(){
+    	 var userId = $(this).text().trim();
+    	 
+    	  console.log("in the function");
+  		 $.ajax( {
+					url : "/user/json/getUser/"+userId ,
+					method : "GET" ,
+					dataType : "json" ,
+					async : false,
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					success : function(JSONData , status) {
+						
+						 displayValue = "<h3>"
+													+"아이디 : "+JSONData.userId+"<br/>"
+													+"이  름 : "+JSONData.userName+"<br/>"
+													+"이메일 : "+JSONData.email+"<br/>"
+													+"ROLE : "+JSONData.role+"<br/>"
+													+"등록일 : "+JSONData.regDate+"<br/>"
+													+"</h3>";
+						
+//						$(".ct_list_pop td:nth-child(3)" ).tooltip( "option", "content", displayValue ).tooltip('close').tooltip('open');
+// 						function reloadToolTip(text){
+// 							  $('#mybody p').tooltip({contents:text}).tooltip('close').tooltip('open');
+// 							}
+					
+						console.log("1 :"+displayValue);
+						//$("h3").remove();
+						//$( "#"+userId+"" ).html(displayValue);
+					}
+
+			}); 
+  		return displayValue;
+      }
+    
+    });//end of tooltip;
+
+  });//end of function;
+
+
 
 </script>
 </head>
@@ -98,9 +157,8 @@ $( function(){
 			${i }<input type="hidden" name="tranNo" id="tranNo" value="${purchase.tranNo }"/>
 		</td>
 		<td></td>
-		<td align="center">
+		<td align="center"><a id='riverroad' href='#' title='hi' >${purchase.buyer.userId }</a>
 			<!-- <a href="/getUser.do?userId=${purchase.buyer.userId }">${purchase.buyer.userId }님</a> -->
-			${purchase.buyer.userId }
 			<input type="hidden" name="buyerId" value="${purchase.buyer.userId}"/>
 		</td>
 		<td></td>

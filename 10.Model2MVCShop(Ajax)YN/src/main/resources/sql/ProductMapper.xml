@@ -69,8 +69,8 @@ SELECT *
 								  						AND p.prod_no	=	#{searchKeyword}
 								  				</if> 
 								  				<if test="searchCondition==1   and searchKeyword !=''  and searchKeyword != null ">
-								  						AND p.prod_name like #{searchKeyword}
-								  				</if>  					
+								  						AND p.prod_name like '%'|| #{searchKeyword}||'%'
+								  				</if>  				
 								  				<if test="searchCondition==2  and searchKeyword !=''  and searchKeyword != null">
 								  						AND p.price = #{searchKeyword}
 								  				</if>
