@@ -23,7 +23,15 @@
 	$( function(){
 		
 		$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
+		
+/* 	
+		if(  !$( $("tr.ct_list_pop td:nth-child(3)").find('input')[0]).val()  ) {
 			
+			$(this).css("color" , "green");
+		}
+*/
+		
+	
 			$("td.ct_btn01:contains('°Ë»ö')").on("click", function(){
 				fncGetProductList('1');
 			});
@@ -47,12 +55,12 @@
 			
 
 				$("tr.ct_list_pop td:nth-child(3)").on("click", function(){
-					if( ${ sessionScope.user.role eq 'admin'} ||!$( $(this).find('input')[0]).val() ) {
+					if( ${ sessionScope.user.role eq 'admin'} || !$( $(this).find('input')[0]).val() ) {
 					self.location ="/product/getProduct?prodNo="+$( $(this).find('input')[1]).val() +"&menu=${param.menu}"
 					}
 				});
 
-	 });
+	});
 	
 
 	</script>
@@ -171,18 +179,7 @@
 				<a href="/product/getProduct?prodNo=${product.prodNo }&menu=${param.menu}">
 		</c:if>
 				${product.prodName}</a>
-			
-			<c:choose>
-			<c:when test="${ sessionScope.user.role=='admin' || empty product.proTranCode}">
-				<span>
-					${product.prodName}
-				</span>
-			</c:when>
-			<c:otherwise>
-				${product.prodName}
-			</c:otherwise>
-			</c:choose>
-		-->
+	-->
 		</td>
 		<td></td>
 		<td align="right">${product.priceAmount}¿ø &nbsp;&nbsp;</td>

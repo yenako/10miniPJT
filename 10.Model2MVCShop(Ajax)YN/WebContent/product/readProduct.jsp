@@ -13,8 +13,8 @@
 	<script type="text/javascript">
 
 	$( function(){
-		$("td:contains(이전)").on("click", function(){
-		//$("#before").on("click", function(){
+		//$("td:contains(이전)").on("click", function(){
+			$("#before").on("click", function(){
 			window.history.back();
 			//history.go(-1);
 		});
