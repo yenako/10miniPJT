@@ -75,6 +75,7 @@ public class PurchaseController {
 		
 		purchase.setBuyer(userService.getUser(buyerId));
 		int prodNoInt = Integer.parseInt(prodNo);
+		purchase.setDivyDate(purchase.getDivyDate().replaceAll("-",""));
 		purchase.setPurchaseProd(productService.getProduct(prodNoInt));
 		purchase.setTranCode("1");
 		purchaseService.addPurchase(purchase);

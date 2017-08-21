@@ -1,57 +1,64 @@
-<!doctype html>
-<html lang="en">
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-		  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-		  <link rel="stylesheet" href="/resources/demos/style.css">
-		  
-		  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-		  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
- 		 <script>
- 		 
-		  $( function() {
-		    $( document ).tooltip();
-		  } );
-	  </script>
-
-	  
-		<style>
-		  label {
-		    display: inline-block;
-		    width: 5em;
-		  }
-		</style>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>Insert title here</title>
 </head>
-
 <body>
+
+<div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">LIST ALL PAGE</h3>
  
-	<p>
-		<a href="#" title="That&apos;s what this widget is">Tooltips</a> 
-		can be attached to any element. When you hover 
-		the element with your mouse, the title attribute is displayed in a little box next to the element, just like a native tooltip.
-	</p>
-	
-	<p>
-		But as it's not a native tooltip, it can be styled. Any themes built with
-		<a href="http://jqueryui.com/themeroller/" title="ThemeRoller: jQuery UI&apos;s theme builder application">ThemeRoller</a>
-		will also style tooltips accordingly.
-	</p>
-	
-	<p>
-		Tooltips are also useful for form elements, to show some additional information in the context of each field.
-	</p>
-	
-	<p>
-		<label for="age">Your age:</label>
-		<input id="age" title="We ask for your age only for statistical purposes.">
-	</p>
-	
-	<p>	
-		Hover the field to see the tooltip.
-	</p>
-	 
+              <div class="box-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                  <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
  
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                <tbody>
+                <tr class="scrollLocation">
+                  <th>BNO</th>
+                  <th>TITLE</th>
+                  <th>WRITER</th>
+                  <th>REGDATE</th>
+                  <th>VIEWCNT</th>
+                </tr>
+                
+                
+                <c:forEach items="${list}" var="boardVO">
+                    <tr class="listToChange">
+                        <td class="scrolling" data-bno="${boardVO.bno}">
+                            ${boardVO.bno}
+                        </td>
+                        <td>${boardVO.title}A</td>
+                        <td>${boardVO.writer}B</td>
+                        <td>${boardVO.regdate}C</td>
+                        <td>${boardVO.viewcnt}D</td>
+                    </tr>
+                </c:forEach>
+ 
+                
+              </tbody></table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+
+
+
 </body>
 </html>

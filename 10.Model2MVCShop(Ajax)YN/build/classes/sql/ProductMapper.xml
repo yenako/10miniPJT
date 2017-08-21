@@ -41,11 +41,11 @@
   	<update id="updateProduct" parameterType="product" >
   		UPDATE product
   		<set>
-    		<if test="prodName !=null">prod_name			  =#{prodName,jdbcType=VARCHAR},</if>
-  			<if test="prodDetail !=null">prod_detail			  =#{prodDetail,jdbcType=VARCHAR},</if>
-  			<if test="manuDate !=null"> manufacture_day=#{manuDate,jdbcType=VARCHAR},</if> 
-  			<if test="price !=null">			price							=#{price,jdbcType=NUMERIC},		</if> 
-  			<if test="fileName != null"> image_file					=#{fileName} 										 </if> 					
+    		<if test="prodName !=null">prod_name			  						=#{prodName,jdbcType=VARCHAR},</if>
+  			<if test="prodDetail !=null">prod_detail			 						 =#{prodDetail,jdbcType=VARCHAR},</if>
+  			<if test="manuDate !=null"> manufacture_day						=#{manuDate,jdbcType=VARCHAR},</if> 
+  			<if test="price !=null">			price												=#{price,jdbcType=NUMERIC},		</if> 
+  			<if test="fileName != null"> image_file		=#{fileName,jdbcType=VARCHAR} </if> 					
   		</set>
 		WHERE prod_no = #{prodNo}  		
   	</update>

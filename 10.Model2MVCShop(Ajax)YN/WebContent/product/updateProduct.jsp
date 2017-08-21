@@ -45,8 +45,12 @@ function fncAddProduct(){
 
 $( function(){
 	
-	$("td:contains('수정')").on("click", function(){
+	$("td.ct_btn01:contains('수정')").on("click", function(){
 		fncAddProduct();
+	});
+	
+	$("td.ct_btn01:contains('취소')").on("click", function(){
+		history.go(-1);
 	});
 
 })
@@ -149,7 +153,7 @@ $( function(){
 		<td class="ct_write01">
 		<img src="/images/uploadFiles/${product.fileName}"/>
 			<input	type="file" name="fileName" class="ct_input_g" 
-						style="width: 200px; height: 19px" maxLength="13" value="/images/uploadFiles/${product.fileName}"/>
+						style="width: 200px; height: 19px" maxLength="13" />
 		</td>
 	</tr>
 	<tr>
@@ -177,7 +181,7 @@ $( function(){
 						<img src="/images/ct_btnbg01.gif"width="17" height="23"/>
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-						<a href="javascript:history.go(-1)">취소</a>
+						취소
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>

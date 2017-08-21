@@ -17,13 +17,13 @@
 $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
-	 $( "td.ct_btn01:contains('확인')" ).on("click" , function() {
+	 $( "td.ct_btn01:contains('추가등록')" ).on("click" , function() {
 		//Debug..
 		//alert(  $( "td.ct_btn01:contains('확인')" ).html() );
 		self.location = "../product/addProductView.jsp;"
 	});
 	
-	 $( "td.ct_btn01:contains('추가등록')" ).on("click" , function() {
+	 $( "td.ct_btn01:contains('확인')" ).on("click" , function() {
 			//Debug..
 			//alert(  $( "td.ct_btn01:contains('추가등록')" ).html() );
 			self.location = "/product/listProduct?menu=manage"
@@ -119,8 +119,11 @@ $(function() {
 			<!-- 테이블 시작 -->
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td height="26">
+					<!-- <td height="26"> -->
+					<td>
+					<!-- "C:\\bitcamp\\mini-PJT\\" -->
 						<img src="/images/uploadFiles/${product.fileName}"/>
+						 <!-- <img src="C:\\bitcamp\\mini-PJT\\${product.fileName}"/>  -->
 					</td>
 				</tr>
 			</table>

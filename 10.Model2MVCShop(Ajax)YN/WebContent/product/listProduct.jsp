@@ -4,11 +4,15 @@
 <html>
 <head>
 	<meta charset="EUC-KR">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>상품 목록조회</title>
 	
 	<link rel="stylesheet" href="/css/admin.css" type="text/css">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	
+
+
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script type="text/javascript">
@@ -27,13 +31,11 @@
 		$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
 		
 /* 	
-		if(  !$( $("tr.ct_list_pop td:nth-child(3)").find('input')[0]).val()  ) {
-			
+		if(  !$( $("tr.ct_list_pop td:nth-child(3)").find('input')[0]).val()  ) {	
 			$(this).css("color" , "green");
 		}
 */
-		
-	
+
 			$("td.ct_btn01:contains('검색')").on("click", function(){
 				fncGetProductList('1');
 			});
@@ -56,11 +58,10 @@
 			
 
 			$("tr.ct_list_pop td:nth-child(3)").on("click", function(){
-					if( ${ sessionScope.user.role eq 'admin'} || !$( $(this).find('input')[0]).val() ) {
+				if( ${ sessionScope.user.role eq 'admin'} || !$( $(this).find('input')[0]).val() ) {
 					self.location ="/product/getProduct?prodNo="+$( $(this).find('input')[1]).val() +"&menu=${param.menu}"
 					}
 			});
-
 	});
 		
 	
@@ -69,39 +70,57 @@
 			
 		});	
 		
-		$( function() {
-			
-		    var availableTags ="";
-		    	/*  [
-        		      "ActionScript",
-        		    ]; */
-			
-			$.ajax(
-					{
-						url : "/product/json/getProdNames" ,
-						method : "GET" ,
-						dataType : "json" ,
-						headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-						},
-						success : function(JSONData , status) {
-							
-							alert("status"+status);
-							//Debug...
-							alert("JSONData : \n"+JSONData);
-							//Debug...
-							alert("JSONData string : \n"+JSON.stringify(JSONData));
-							
-							availableTags = JSON.stringify(JSONData);
-						}
-				});
+/* 	
+	$( function() {
+		$( "input.ct_input_g" ).on('keyup', function(){
 
-		    $( "input.ct_input_g" ).autocomplete({
-		      source: availableTags
-		    });
-		  } );
-		
+			$( this).autocomplete({	
+			source ://availableTags
+							function(request, response) {
+					$.ajax(
+							{
+							url : "/product/json/getProdNames" ,
+							method : "GET" ,
+							dataType : "json" ,
+	 						//async : false,
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+							success : function(JSONData , status) {
+								response(JSONData); 
+								    
+								}
+						});
+				}
+			  });
+		});
+	 });	
+*/
+	
+	$( function() {
+		$( "input.ct_input_g" ).on('keyup', function(){
+					
+					$.ajax(
+							{
+							url : "/product/json/getProdNames" ,
+							method : "GET" ,
+							dataType : "json" ,
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+							success : function(JSONData , status) {
+								
+									$(  "input.ct_input_g"  ).autocomplete({	
+										source:  JSONData
+									});
+							}
+					  });//end of ajax
+			});
+	 });	
+	
+	
 		$( function(){
 			$( "tr.ct_list_pop:contains('판매중') span" ).on("click" , function() {
 				alert("판매중을 클릭했습니다.");
@@ -186,7 +205,7 @@
 					<option value="1"  ${!empty search.searchCondition && search.searchCondition==1 ? "selected":"" }>상품명</option>
 					<option value="2" ${!empty search.searchCondition && search.searchCondition==2? "selected":"" }>상품가격</option>
 			</select>
-			<input type="text" name="searchKeyword"  
+			<input type="text" name="searchKeyword"  id="autoComplete"
 						 value="${! empty search.searchKeyword ? search.searchKeyword : ""}"   
 						 class="ct_input_g" style="width:200px; height:19px" />
 		</td>

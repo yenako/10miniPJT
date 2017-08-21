@@ -71,12 +71,20 @@ public class ProductController {
 	ModelAndView modelAndView = new ModelAndView();
 
 	 try {
-		 String uploadDir = "C:\\bitcamp\\mini-PJT\\";
+		// String uploadDir = "C:\\bitcamp\\mini-PJT\\";
+		 String uploadDir = "C:\\Users\\koh\\git\\10miniPJT\\10.Model2MVCShop(Ajax)YN\\WebContent\\images\\uploadFiles\\";
 		 //String realPath = request.getServletContext().getRealPath(uploadDir);
-		 
+		
 		 File transferFile = new File(uploadDir  + file.getOriginalFilename()); 
 		 file.transferTo(transferFile);
+		 System.out.println("file transferred.... ");
 		 product.setFileName(file.getOriginalFilename());
+		 product.setManuDate(product.getManuDate().replaceAll("-",""));
+		 /////////////////////////////////////////////////////////////////
+		 System.out.println("the product that I`m trying to add is :: "+product);
+		 productService.addProduct(product);
+		 /////////////////////////////////////////////////////////////////
+		 
 		 
 		 } catch (Exception e) {
 			 e.printStackTrace();
@@ -220,10 +228,18 @@ public class ProductController {
 	public ModelAndView updateProduct(@ModelAttribute("product") Product product,
 																Model model) throws Exception{
 		System.out.println("/product/updateProduct : POST");
+		System.out.println("product fileName is ...  : "+"_"+product.getFileName()+"_" );
 		
+		if(product.getFileName().length()<1){
+			product.setFileName(null);
+			System.out.println("product.getFileName().length()<1 ÀÌ´Ù.");
+		}
+		
+		System.out.println("product fileName is ...  : "+"_"+product.getFileName()+"_" );
 		product.setManuDate(product.getManuDate().replaceAll("-",""));
 		productService.updateProduct(product);
 		
+		model.addAttribute("product", productService.getProduct(product.getProdNo()));
 		model.addAttribute("prodNo",product.getProdNo() );
 		
 		ModelAndView modelAndView = new ModelAndView();
